@@ -7,23 +7,23 @@ var questCont = document.querySelector('#qContainer')
 var index = 0
 var myQuestions = [
     {
-        question:"What color is the sky?",
-        answers:["red", "black", "green", "blue"],
+        question: "What color is the sky?",
+        answers: ["red", "black", "green", "blue"],
         correct: "blue"
     },
     {
-        question:"What color is the sun?",
-        answers:["black", "green", "mohagany", "orange"],
+        question: "What color is the sun?",
+        answers: ["black", "green", "mohagany", "orange"],
         correct: "orange"
     },
     {
-        question:"What color are strawberries",
-        answers:["pink", "blue", "red", "green"],
+        question: "What color are strawberries",
+        answers: ["pink", "blue", "red", "green"],
         correct: "red"
     },
     {
-        question:"What color are bananas",
-        answers:["red", "blue", "yellow", "green"],
+        question: "What color are bananas",
+        answers: ["red", "blue", "yellow", "green"],
         correct: "yellow"
     },
 ];
@@ -34,7 +34,7 @@ var myQuestions = [
 function displayElements(state) {
     if (state === "START") {
         startQuiz.style.display = "flex";
-        Quiz.style.display = "none";
+        quiz.style.display = "none";
         scoreBoard.style.display = "none";
 
     }
@@ -50,19 +50,44 @@ function displayElements(state) {
         quiz.style.display = "none";
         scoreBoard.style.display = "flex";
 
-    }}
+    }
+}
 
 function init() {
     displayElements('START')
 }
 
 function playQuiz() {
-    nextQuest()
-    displayElements('QUIZ')
+    nextQuest();
+    displayElements('QUIZ');
+    beginTimer();
 }
 
 function enterScore() {
     displayElements('SCORE')
+}
+
+function beginTimer() {
+    var seconds = 60;
+    var questObject = myQuestions[index]
+    function beginTimer() {
+        console.log('timer suppose to go off')
+        var timer = setInterval(function () {
+            seconds--;
+            document.getElementById('timerDisplay').innerHTML = '00:' + seconds;
+            if (seconds < 0) {
+                // clearInterval(timer);
+                alert("Time is up buba!");
+            } else if (questObject.answers !== questObject.correct) {
+                seconds -= 5;
+            } else {
+
+            }
+        }, 1000);
+    }
+
+    document.getElementById('timerDisplay').innerHTML = '00' + seconds;
+    beginTimer();
 }
 
 function nextQuest() {
@@ -88,6 +113,8 @@ function checksScore(event) {
     }
     if (index === 3) {
         // end quiz
+        displayElements('SCORE');
+        return;
     } else {
         index++;
         nextQuest();
