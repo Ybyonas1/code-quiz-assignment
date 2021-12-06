@@ -1,5 +1,15 @@
 body {
     font-family: 'Times New Roman', Times, serif;
+    background-color: blanchedalmond;
+}
+
+h1 {
+    color: black;
+}
+
+nav {
+    display: flex;
+    margin-left: 8%;
 }
 
 main {
@@ -14,3 +24,13 @@ main > section {
     display: flex;
     flex-direction: column;
 }
+
+#timerDisplay {
+    color: blue;
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+    margin-right: 10%;
+    font-size: 30px;
+}
+

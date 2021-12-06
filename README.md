@@ -35,8 +35,8 @@ Here is a screenshot taken towards the end when the time has run out & your init
 ## Usage
 The Coding quiz really has no other use other than allowing me to practice and implement my javascript knowledge
 
-[Link to the deplyed site]()
+[Link to the deplyed site](https://ybyonas1.github.io/code-quiz-assignment/)
 
-[Repository]()
+[Repository](https://github.com/Ybyonas1/code-quiz-assignment)
 
 Thank You.

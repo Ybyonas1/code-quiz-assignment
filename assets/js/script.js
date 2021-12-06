@@ -4,7 +4,9 @@ var scoreBoard = document.querySelector('#score');
 var startButton = document.querySelector('#startButton');
 var quizH2 = document.querySelector('#quiz h2');
 var questCont = document.querySelector('#qContainer')
-var index = 0
+var index = 0;
+var seconds = 10;
+var timer ;
 var myQuestions = [
     {
         question: "What color is the sky?",
@@ -55,71 +57,68 @@ function displayElements(state) {
 
 function init() {
     displayElements('START')
-}
+};
 
 function playQuiz() {
     nextQuest();
     displayElements('QUIZ');
     beginTimer();
-}
+};
 
 function enterScore() {
     displayElements('SCORE')
-}
+};
+
+// var questObject = myQuestions[index]
+
 
 function beginTimer() {
-    var seconds = 60;
-    var questObject = myQuestions[index]
-    function beginTimer() {
-        console.log('timer suppose to go off')
-        var timer = setInterval(function () {
+        // console.log('timer suppose to go off')
+        timer = setInterval(function () {
             seconds--;
             document.getElementById('timerDisplay').innerHTML = '00:' + seconds;
-            if (seconds < 0) {
-                // clearInterval(timer);
-                alert("Time is up buba!");
-            } else if (questObject.answers !== questObject.correct) {
-                seconds -= 5;
-            } else {
-
-            }
+            if (seconds <= 0) {
+                clearInterval(timer);
+                alert("Time is up Buba");
+                displayElements('SCORE')
+            };
+            
         }, 1000);
-    }
-
-    document.getElementById('timerDisplay').innerHTML = '00' + seconds;
-    beginTimer();
-}
+};
 
 function nextQuest() {
-    var questObject = myQuestions[index]
+    var questObject = myQuestions[index];
     questCont.innerHTML = "";
     var quizQuest = document.createElement('h2');
     quizQuest.textContent = questObject.question
     questCont.appendChild(quizQuest);
     for (var i = 0; i < questObject.answers.length; i++) {
         var answerbtn = document.createElement('button');
-        answerbtn.textContent = questObject.answers[i]
-        answerbtn.addEventListener("click", checksScore)
+        answerbtn.textContent = questObject.answers[i];
+        answerbtn.addEventListener("click", checksScore);
         questCont.appendChild(answerbtn);
     }
-}
+};
 
 function checksScore(event) {
+    console.log(event);
     var selAnswer = event.target.textContent;
-    var corAnswer = myQuestions[index].correct;
+    var questObject = myQuestions[index];
+    var corAnswer = questObject.correct;
     console.log(selAnswer === corAnswer);
     if (selAnswer !== corAnswer) {
-        // Run code to reduce time
+        seconds -= 5;        // Run code to reduce time
     }
     if (index === 3) {
         // end quiz
+        clearInterval(timer)
         displayElements('SCORE');
         return;
     } else {
         index++;
         nextQuest();
     }
-}
+};
 
 startButton.addEventListener("click", playQuiz);
 quizH2.addEventListener("click", enterScore);
