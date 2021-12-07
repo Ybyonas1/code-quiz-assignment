@@ -10,6 +10,7 @@ h1 {
 nav {
     display: flex;
     margin-left: 8%;
+    flex-direction: column;
 }
 
 main {

@@ -3,10 +3,24 @@ var quiz = document.querySelector('#quiz');
 var scoreBoard = document.querySelector('#score');
 var startButton = document.querySelector('#startButton');
 var quizH2 = document.querySelector('#quiz h2');
-var questCont = document.querySelector('#qContainer')
+var questCont = document.querySelector('#qContainer');
+var scoreEntry = document.querySelector('#scoreEntry');
+
+var tabelEl = document.querySelector("#table");
+
+var initialsEl = document.querySelector('#initials');
+var submit = document.querySelector('#submit');
+var highSList = document.querySelector('#highslist');
+var HSCount = document.querySelector('#HSCount');
+
+var initialsKey = JSON.parse(localStorage.getItem('initials')) || [];
+
+
+
+var list = [];
 var index = 0;
-var seconds = 10;
-var timer ;
+var seconds = 60;
+var timer;
 var myQuestions = [
     {
         question: "What color is the sky?",
@@ -52,7 +66,7 @@ function displayElements(state) {
         quiz.style.display = "none";
         scoreBoard.style.display = "flex";
 
-    }
+    } 
 }
 
 function init() {
@@ -71,19 +85,18 @@ function enterScore() {
 
 // var questObject = myQuestions[index]
 
-
 function beginTimer() {
-        // console.log('timer suppose to go off')
-        timer = setInterval(function () {
-            seconds--;
-            document.getElementById('timerDisplay').innerHTML = '00:' + seconds;
-            if (seconds <= 0) {
-                clearInterval(timer);
-                alert("Time is up Buba");
-                displayElements('SCORE')
-            };
-            
-        }, 1000);
+    // console.log('timer suppose to go off')
+    timer = setInterval(function () {
+        seconds--;
+        document.getElementById('timerDisplay').innerHTML = '00:' + seconds;
+        if (seconds <= 0) {
+            clearInterval(timer);
+            alert("Time is up Buba");
+            displayElements('SCORE')
+        };
+
+    }, 1000);
 };
 
 function nextQuest() {
@@ -100,12 +113,35 @@ function nextQuest() {
     }
 };
 
+if (scoreEntry) {
+    scoreEntry.addEventListener('submit', function (event) {
+        event.preventDefault();
+        // console.log("here")
+        var savedIni = {
+            initials: initialsEl.value.trim()
+        }
+        
+        // console.log(savedIni);
+        initialsKey.push(savedIni);
+        localStorage.setItem("Initials", JSON.stringify(initialsKey));
+    }
+    )
+};
+
+if (tabelEl) {
+    for (var savedIni of initialsKey) {
+        console.log(savedIni);
+    }
+};
+
+
 function checksScore(event) {
-    console.log(event);
+    // event.preventDefault();
+    // console.log(event);
     var selAnswer = event.target.textContent;
     var questObject = myQuestions[index];
     var corAnswer = questObject.correct;
-    console.log(selAnswer === corAnswer);
+    // console.log(selAnswer === corAnswer);
     if (selAnswer !== corAnswer) {
         seconds -= 5;        // Run code to reduce time
     }

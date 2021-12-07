@@ -10,8 +10,13 @@
 </head>
 
 <body>
-    <nav>
-    <h1>Highscore</h1>
+    <nav id="HSBar">
+        <h1>Highscore Count: <span id="HSCount"></span></h1>
+       <section id="table">For some reason I can't get the high score initials to appear here.
+           They appear in my applications folder, but I just can't get them to display here. 
+           I've tried everything. Spent DAYS on this, but I can't seem to get it to work. 
+           I can't even begin to explain how frustrated I am with this & myself.
+       </section>
     </nav>
     <div id="timerDisplay">Timer</div>
     <main>
@@ -28,12 +33,9 @@
         </section>
         <section id="score">
             <h2>SCORE</h2>
-            <form>
-                <label for='initials'>
-                    Initials
-                </label>
+            <form id="scoreEntry">
+                <label for='initials'>Initials</label>
                 <input id="initials" maxlength="2">
-                <button type="submit">Submit</button>
             </form>
         </section>
     </main>
