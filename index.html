@@ -11,14 +11,8 @@
 
 <body>
     <nav id="HSBar">
-        <h1>Highscore Count: <span id="HSCount"></span></h1>
-       <section id="table">For some reason I can't get the high score initials to appear here.
-           They appear in my applications folder, but I just can't get them to display here. 
-           I've tried everything. Spent DAYS on this, but I can't seem to get it to work. 
-           I can't even begin to explain how frustrated I am with this & myself.
-       </section>
+        <div id="timerDisplay">Timer</div>
     </nav>
-    <div id="timerDisplay">Timer</div>
     <main>
         <header>
             <h1>Code Quiz</h1>
@@ -37,6 +31,20 @@
                 <label for='initials'>Initials</label>
                 <input id="initials" maxlength="2">
             </form>
+        </section>
+        <h1>Highscore Count: <span id="HSCount"></span></h1>
+        <section>
+            <table>
+                <tr>
+                    <th>Initials</th>
+                    <th>Score</th>
+                    <th>Time</th>
+                </tr>
+            </table>
+            <table id="table">
+
+            </table>
+            <!-- <a href="/">Play Again?</a> -->
         </section>
     </main>
 

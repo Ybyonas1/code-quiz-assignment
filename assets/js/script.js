@@ -6,16 +6,21 @@ var quizH2 = document.querySelector('#quiz h2');
 var questCont = document.querySelector('#qContainer');
 var scoreEntry = document.querySelector('#scoreEntry');
 
-var tabelEl = document.querySelector("#table");
+var tableEl = document.querySelector("#table");
 
 var initialsEl = document.querySelector('#initials');
 var submit = document.querySelector('#submit');
 var highSList = document.querySelector('#highslist');
 var HSCount = document.querySelector('#HSCount');
 
-var initialsKey = JSON.parse(localStorage.getItem('initials')) || [];
+// This is pulling the stringified local storage, and converting it into an array structure
+// If the value returned from local storage at .getitem is undefined, initalsKey is set to an empty array
+var savedScoresArray = JSON.parse(localStorage.getItem('savedscores')) || [];
+console.log(savedScoresArray);
+console.log(localStorage);
 
 
+var correctAnswers = 0;
 
 var list = [];
 var index = 0;
@@ -65,12 +70,53 @@ function displayElements(state) {
         startQuiz.style.display = "none";
         quiz.style.display = "none";
         scoreBoard.style.display = "flex";
+        displayHighscores();
 
     } 
-}
+};
+
+scoreEntry.addEventListener('submit', function (event) {
+    event.preventDefault();
+    // console.log("here")
+    var savedIni = {
+        initials: initialsEl.value.trim(),
+        time: seconds,
+        score: correctAnswers
+    };
+    
+    // console.log(savedIni);
+    // This is adding the "savedIni" to the end of the savedScoresArray variable
+    savedScoresArray.push(savedIni);
+    localStorage.setItem("savedscores", JSON.stringify(savedScoresArray));
+    displayHighscores();
+});
+
+function displayHighscores () {
+    tableEl.innerHTML= "";
+    console.log(savedScoresArray);
+    for (var i = 0; i < savedScoresArray.length; i++) {
+        var scoreObject = savedScoresArray[i]
+        console.log(scoreObject);
+        var row = document.createElement('tr');
+        var userInitials = document.createElement('td');
+        var userScore = document.createElement('td');
+        var userTime = document.createElement('td');
+        userInitials.textContent = scoreObject.initials;
+        userTime.textContent = scoreObject.time;
+        userScore.textContent = scoreObject.score;
+        row.appendChild(userInitials);
+        row.appendChild(userScore);
+        row.appendChild(userTime);
+        tableEl.appendChild(row);
+
+    }
+};
 
 function init() {
-    displayElements('START')
+    // WHEN I CHANGE THIS TO 'SCORE' I AM UNABLE TO BEGIN THE QUIZ
+    // BUT IT WON'T LOG MY INITIALS ON THE SCREEN
+    displayElements('START');
+    // displayElements('SCORE')
 };
 
 function playQuiz() {
@@ -113,30 +159,29 @@ function nextQuest() {
     }
 };
 
-if (scoreEntry) {
-    scoreEntry.addEventListener('submit', function (event) {
-        event.preventDefault();
-        // console.log("here")
-        var savedIni = {
-            initials: initialsEl.value.trim()
-        }
+// if (scoreEntry) {
+//     scoreEntry.addEventListener('submit', function (event) {
+//         event.preventDefault();
+//         // console.log("here")
+//         var savedIni = {
+//             initials: initialsEl.value.trim()
+//         }
         
-        // console.log(savedIni);
-        initialsKey.push(savedIni);
-        localStorage.setItem("Initials", JSON.stringify(initialsKey));
-    }
-    )
-};
+//         // console.log(savedIni);
+//         savedScoresArray.push(savedIni);
+//         localStorage.setItem("Initials", JSON.stringify(savedScoresArray));
+//     }
+//     )
+// };
 
-if (tabelEl) {
-    for (var savedIni of initialsKey) {
-        console.log(savedIni);
-    }
-};
+// if (tabelEl) {
+//     for (var savedIni of savedScoresArray) {
+//         console.log(savedIni);
+//     }
+// };
 
 
 function checksScore(event) {
-    // event.preventDefault();
     // console.log(event);
     var selAnswer = event.target.textContent;
     var questObject = myQuestions[index];
@@ -144,6 +189,8 @@ function checksScore(event) {
     // console.log(selAnswer === corAnswer);
     if (selAnswer !== corAnswer) {
         seconds -= 5;        // Run code to reduce time
+    } else {
+        correctAnswers++;
     }
     if (index === 3) {
         // end quiz
